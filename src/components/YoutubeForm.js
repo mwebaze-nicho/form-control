@@ -5,13 +5,13 @@ import * as Yup from "yup";
 const initialValues = {
   name: "",
   email: "",
-  channel: "",
-  comments: "",
+  password: "",
+  // comments: "",
 };
 
 //validating form data
-//values.name values.email values.channel
-//errors.name errors.email errors.channel
+//values.name values.email values.password
+//errors.name errors.email errors.password
 //yup makes it easier to write validation through schemas
 
 const validationSchema = Yup.object({
@@ -22,10 +22,10 @@ const validationSchema = Yup.object({
   email: Yup.string()
     .required("Email is required")
     .email("Invalid email format"),
-  channel: Yup.string()
-    .required("Channel is required")
-    .min(4, "Name is too short. Atleast 4 characters")
-    .max(8, "Name is too long. Atmost 8 characters"),
+  password: Yup.string()
+    .required("Password is required")
+    .min(4, "Password is too short. Atleast 4 characters")
+    .max(8, "Password is too long. Atmost 8 characters"),
 });
 
 //handling form data submission
@@ -59,14 +59,14 @@ const YouTubeForm = () => {
         </div>
 
         <div className="form-control">
-          <label htmlFor="channel">Channel</label>
-          <Field type="text" name="channel" id="channel" />
+          <label htmlFor="password">Password</label>
+          <Field type="text" name="password" id="password" />
           <span className="error">
-            <ErrorMessage name="channel" />
+            <ErrorMessage name="password" />
           </span>
         </div>
 
-        <div className="form-control">
+        {/* <div className="form-control">
           <label htmlFor="comments">Comment</label>
           <Field
             as="textarea"
@@ -74,7 +74,7 @@ const YouTubeForm = () => {
             id="comments"
             placeholder="Enter comment"
           ></Field>
-        </div>
+        </div> */}
 
         <button type="submit">Submit</button>
       </Form>
