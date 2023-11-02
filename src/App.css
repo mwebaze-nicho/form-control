@@ -30,3 +30,12 @@ input[type="email"], textarea {
 .error {
   color: red;
 }
+
+.button{
+  display: flex;
+  justify-content: end;
+}
+
+button{
+  cursor: pointer;
+}
