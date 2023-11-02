@@ -66,17 +66,9 @@ const YouTubeForm = () => {
           </span>
         </div>
 
-        {/* <div className="form-control">
-          <label htmlFor="comments">Comment</label>
-          <Field
-            as="textarea"
-            name="comments"
-            id="comments"
-            placeholder="Enter comment"
-          ></Field>
-        </div> */}
-
-        <span className="button"><button type="submit">Submit</button></span>
+        <span className="button">
+          <button type="submit">Submit</button>
+        </span>
       </Form>
     </Formik>
   );

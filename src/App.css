@@ -31,11 +31,3 @@ input[type="email"], textarea {
   color: red;
 }
 
-.button{
-  display: flex;
-  justify-content: end;
-}
-
-button{
-  cursor: pointer;
-}
