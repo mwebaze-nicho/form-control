@@ -1,11 +1,17 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import TextError from "./TextError";
 
 //Takes in the initial values of all input fields.
 const initialValues = {
   name: "",
   email: "",
   password: "",
+  address: "",
+  social: {
+    facebook: "",
+    twitter: "",
+  },
   // comments: "",
 };
 
@@ -26,11 +32,20 @@ const validationSchema = Yup.object({
     .required("Password is required")
     .min(4, "Password is too short. Atleast 4 characters")
     .max(8, "Password is too long. Atmost 8 characters"),
+
+  address: Yup.string()
+    .required("Required")
+    .min(6, "Atleast 6 characters")
+    .max(100, " Atmost 100 characters"),
 });
 
 //handling form data submission
-const onSubmit = (values) => {
+const onSubmit = (values, onSubmitProps) => {
   console.log("values", values);
+  console.log("Submit props", onSubmitProps);
+
+  //after submitting onsubmit to false
+  onSubmitProps.setSubmitting(false);
 };
 
 const YouTubeForm = () => {
@@ -39,37 +54,71 @@ const YouTubeForm = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      // validateOnMount
     >
       {/* Form component sees directly in the formic props onsubmit */}
-      <Form>
-        <div className="form-control">
-          <label htmlFor="name">Name</label>
-          <Field type="text" name="name" id="name" />
-          <span className="error">
-            <ErrorMessage name="name" />
-          </span>
-        </div>
+      {(formik) => (
+        <Form>
+          <div className="form-control">
+            <label htmlFor="name">Name</label>
+            <Field type="text" name="name" id="name" />
+            <span className="error">
+              <ErrorMessage name="name" />
+            </span>
+          </div>
 
-        <div className="form-control">
-          <label htmlFor="email">E-mail</label>
-          <Field type="email" name="email" id="email" />
-          <span className="error">
-            <ErrorMessage name="email" />
-          </span>
-        </div>
+          <div className="form-control">
+            <label htmlFor="email">E-mail</label>
+            <Field type="email" name="email" id="email" />
+            <span className="error">
+              <ErrorMessage name="email" />
+            </span>
+          </div>
 
-        <div className="form-control">
-          <label htmlFor="password">Password</label>
-          <Field type="text" name="password" id="password" />
-          <span className="error">
-            <ErrorMessage name="password" />
-          </span>
-        </div>
+          <div className="form-control">
+            <label htmlFor="password">Password</label>
+            <Field type="text" name="password" id="password" />
+            <span className="error">
+              <ErrorMessage name="password" />
+            </span>
+          </div>
+          <div className="form-control">
+            <label htmlFor="address">Address:</label>
 
-        <span className="button">
-          <button type="submit">Submit</button>
-        </span>
-      </Form>
+            {/*
+             * Passing data from this field using props
+             * Getting props and spreading them to the input element to connect to formik
+             */}
+
+            <Field type="text" name="address" id="address">
+              {(props) => {
+                const { field, form, meta } = props;
+
+                return (
+                  <div>
+                    <input
+                      type="text"
+                      name="address"
+                      {...field}
+                      {...meta}
+                      {...form}
+                    />
+                    <ErrorMessage name="address" component={TextError} />
+                  </div>
+                );
+              }}
+            </Field>
+          </div>
+          <span className="button">
+            <button
+              type="submit"
+              disabled={!formik.isValid || formik.isSubmitting}
+            >
+              Submit
+            </button>
+          </span>
+        </Form>
+      )}
     </Formik>
   );
 };
